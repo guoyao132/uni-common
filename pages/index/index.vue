@@ -1,61 +1,68 @@
 <template>
-	<view class="content">
-		<image class="logo" src="/static/logo.png"></image>
-		<view class="text-area">
-			<text class="title">{{title}}</text>
-      {{$gyCommon.hasData}}
-		</view>
-	</view>
+  <view class="index">
+    <uni-section title="基础" type="line">
+      <uni-list :border="true">
+        <uni-list-item
+          v-for="(item, index) in list"
+          :title="item.name"
+          link
+          :key="index"
+          :to="item.page"
+        ></uni-list-item>
+      </uni-list>
+    </uni-section>
+    <uni-section title="页面" type="line">
+      <uni-list :border="true">
+        <uni-list-item
+          title="login"
+          link
+          to="/uni_modules/gy-uni-common/pages/login/login"
+        ></uni-list-item>
+      </uni-list>
+    </uni-section>
+  </view>
 </template>
 
-<script setup>
-import {getCurrentInstance} from 'vue'
-const title = 'hello'
-
-const instance = getCurrentInstance();
-console.log(instance);
-console.log(instance.appContext.config.globalProperties.$gyCommon);
-console.log(instance.appContext.config.globalProperties.$gyCommon.hasData);
+<script>
+export default {
+  data() {
+    return {
+      list: [
+        {
+          name: 'common',
+          page: '/pages/useCommon/useCommon',
+        },
+        {
+          name: 'request',
+          page: '/pages/useRequest/useRequest',
+        },
+        {
+          name: 'chooseFile',
+          page: '/pages/chooseFile/chooseFile',
+        },
+      ]
+    }
+  },
+  mounted(){
+    let token = this.$gyCommon.getLocalStorage('zhxd_token', 0);
+    if(!token){
+      uni.navigateTo({
+        url: '/uni_modules/gy-uni-common/pages/login/login',
+      })
+    }
+  },
+  methods: {
+    bindClick(item){
+      console.log(item);
+      if(item.page){
+        uni.navigateTo({
+          url: item.page,
+        })
+      }
+    },
+  },
+}
 </script>
-<!--<script>-->
-<!--export default {-->
-<!--  data() {-->
-<!--    return {-->
-<!--      title: '123',-->
-<!--    }-->
-<!--  },-->
-<!--  methods: {-->
-
-<!--  },-->
-<!--  mounted(){-->
-<!--  },-->
-<!--}-->
-<!--</script>-->
 
 <style>
-	.content {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-	}
-
-	.logo {
-		height: 200rpx;
-		width: 200rpx;
-		margin-top: 200rpx;
-		margin-left: auto;
-		margin-right: auto;
-		margin-bottom: 50rpx;
-	}
-
-	.text-area {
-		display: flex;
-		justify-content: center;
-	}
-
-	.title {
-		font-size: 36rpx;
-		color: #8f8f94;
-	}
 </style>
