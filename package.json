@@ -1,0 +1,11 @@
+{
+  "id": "gy-uni-common",
+  "displayName": "gy-uni-common",
+  "version": "0.0.0",
+  "description": "gy-uni-common",
+  "dependencies": {
+    "base64-js": "^1.3.0",
+    "sm-crypto": "^0.3.13",
+    "text-decoding": "^1.0.0"
+  }
+}
