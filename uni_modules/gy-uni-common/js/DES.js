@@ -78,22 +78,24 @@ export const encryptRequest = (config, enableAES) => {
               promiseArr.push(b.arrayBuffer());
             })
             Promise.all(promiseArr).then(result => {
-                let binary = '';
-                for (let j = 0; j < result.length; j++) {
-                  let byteArray = new Uint8Array(result[j]);
-                  let len = byteArray.byteLength;
-                  let binary_linshi = '';
-                  for (let i = 0; i < len; i++) {
-                    binary_linshi += String.fromCharCode(byteArray[i]);
-                  }
-                  binary += binary_linshi;
+              let binary = '';
+              for (let j = 0; j < result.length; j++) {
+                let byteArray = new Uint8Array(result[j]);
+                let len = byteArray.byteLength;
+                let binary_linshi = '';
+                for (let i = 0; i < len; i++) {
+                  binary_linshi += String.fromCharCode(byteArray[i]);
                 }
-                binary = window.btoa(binary)
-                headers["sm3-key"] = SM3(binary);
-                headers["sm4-key"] = enKey;//国网加密设置 header 头；
-                headers["sm4-key-i"] = enKeyi;//国网加密设置 header 头；
-                resolveFile(config)
-              })
+                console.log(binary_linshi);
+                binary += binary_linshi;
+              }
+              binary = window.btoa(binary)
+              console.log(binary);
+              headers["sm3-key"] = SM3(binary);
+              headers["sm4-key"] = enKey;//国网加密设置 header 头；
+              headers["sm4-key-i"] = enKeyi;//国网加密设置 header 头；
+              resolveFile(config)
+            })
             //   #endif
             // #ifdef APP || APP-PLUS
             plus.io.resolveLocalFileSystemURL(
@@ -101,8 +103,8 @@ export const encryptRequest = (config, enableAES) => {
               function (entry) {
                 entry?.file(function (file) {
                   let size = file.size;
-                  let offset = 20 || 1024 * 50;
-                  let chunks = [file.slice(0, 20)];
+                  let offset = 1024 * 50;
+                  let chunks = [file.slice(0, offset)];
                   let cur = offset;
                   let promiseArr = [];
                   while (cur < size) {
@@ -118,7 +120,7 @@ export const encryptRequest = (config, enableAES) => {
                     cur += offset;
                   }
                   chunks.forEach(b => {
-                    promiseArr.push(new Promise(resolve => {
+                    promiseArr.push(new Promise(resolve2 => {
                       const fileReader = new plus.io.FileReader()
                       fileReader.readAsDataURL(b, 'utf-8')
                       fileReader.onloadend = function (evt) {
@@ -127,11 +129,12 @@ export const encryptRequest = (config, enableAES) => {
                           size: file.size,
                         }
                         b.close();
-                        resolve(result.base64)
+                        resolve2(result.base64)
                       }
                     }))
                   })
                   Promise.all(promiseArr).then(result => {
+                    console.log(binary);
                     let binary = result.join('');
                     headers["sm3-key"] = SM3(binary);
                     headers["sm4-key"] = enKey;//国网加密设置 header 头；
@@ -141,11 +144,10 @@ export const encryptRequest = (config, enableAES) => {
                 })
               },
               function (error) {
-                console.log(error)
+                console.error(error)
               },
             )
             //   #endif
-
           })
         }
 
@@ -153,7 +155,6 @@ export const encryptRequest = (config, enableAES) => {
         setFileSm3(file).then(config => {
           resolve(config)
         })
-        resolve(config)
       } else if (config.data && config.data.toString() == "[object FormData]") {
         let headers = config.header;
         let delEntity = new Array();
@@ -226,11 +227,7 @@ export const encryptRequest = (config, enableAES) => {
         let headers = config.header;
         headers["sm4-key"] = enKey;//国网加密设置 header 头；
         headers["sm4-key-i"] = enKeyi;//国网加密设置 header 头；
-        if (JSON.stringify(datas) !== '{}') {
-          headers["sm3-key"] = strD3
-        } else {
-          headers["sm3-key"] = str3
-        }
+        headers["sm3-key"] = str3
         resolve(config)
       }
     } else {
@@ -245,11 +242,17 @@ export const decrypt = (msg) => {
   return sm4.decrypt(msg);
 }
 export const decryptRequest = (response, enableAES) => {
-  if (enableAES && response.data['zhxd-data']) {
-    let data = decrypt(response.data['zhxd-data']);
+  let responseData = response.data;
+  if(typeof responseData === 'string'){
+    try {
+      responseData = JSON.parse(responseData);
+    }catch (err){}
+  }
+  if (enableAES && responseData['zhxd-data']) {
+    let data = decrypt(responseData['zhxd-data']);
     return data ? JSON.parse(data) : data;
   } else {
-    return response.data;
+    return responseData;
   }
 }
 export default {

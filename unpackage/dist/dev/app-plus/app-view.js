@@ -1844,9 +1844,9 @@ module.exports = function (url, options) {
   !*** D:/projectUNIAPP/gy-uni-common/uni_modules/uni-icons/components/uni-icons/uniicons.ttf ***!
   \**********************************************************************************************/
 /*! no static exports found */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-module.exports = "/uni_modules/uni-icons/components/uni-icons/uniicons.ttf";
+module.exports = __webpack_require__.p + "assets/uniicons.2579c7da.ttf";
 
 /***/ }),
 /* 38 */
@@ -3579,9 +3579,9 @@ module.exports = exports;
   !*** D:/projectUNIAPP/gy-uni-common/uni_modules/gy-uni-common/static/login/login-bg.png ***!
   \******************************************************************************************/
 /*! no static exports found */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-module.exports = "/uni_modules/gy-uni-common/static/login/login-bg.png";
+module.exports = __webpack_require__.p + "uni_modules/gy-uni-common/static/login/login-bg.png";
 
 /***/ }),
 /* 94 */

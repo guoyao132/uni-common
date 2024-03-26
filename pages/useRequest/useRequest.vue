@@ -138,9 +138,6 @@ export default {
         ajaxFile({
           url: baseUrl + '/rbac/sys/file/uploadOne',
           file: file,
-          data: {
-            a: 1,
-          },
         }).then(resp => {
           console.log(resp.result);
         })
