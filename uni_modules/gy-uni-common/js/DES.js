@@ -86,11 +86,9 @@ export const encryptRequest = (config, enableAES) => {
                 for (let i = 0; i < len; i++) {
                   binary_linshi += String.fromCharCode(byteArray[i]);
                 }
-                console.log(binary_linshi);
                 binary += binary_linshi;
               }
               binary = window.btoa(binary)
-              console.log(binary);
               headers["sm3-key"] = SM3(binary);
               headers["sm4-key"] = enKey;//国网加密设置 header 头；
               headers["sm4-key-i"] = enKeyi;//国网加密设置 header 头；
@@ -134,7 +132,6 @@ export const encryptRequest = (config, enableAES) => {
                     }))
                   })
                   Promise.all(promiseArr).then(result => {
-                    console.log(binary);
                     let binary = result.join('');
                     headers["sm3-key"] = SM3(binary);
                     headers["sm4-key"] = enKey;//国网加密设置 header 头；
