@@ -36,6 +36,14 @@
 			{
 				"navigationStyle": "custom"
 			}
+		},
+		{
+			"path" : "uni_modules/gy-uni-common/pages/personalCenter/personalCenter",
+			"style" :
+			{
+				"navigationBarTitleText" : "个人中心",
+				"enablePullDownRefresh" : false
+			}
 		}
 	],
 	"globalStyle": {

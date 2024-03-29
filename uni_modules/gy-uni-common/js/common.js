@@ -364,6 +364,46 @@ export const tree2array = (tree, child) => { // this.$common.tree2array(data, 'c
   return lists;
 }
 
+export const checkUpdate = () => {
+  //   #ifdef APP || APP-PLUS
+  let currentVersion = plus.runtime.version;
+  uni.showModal({
+    title: '更新提示',
+    content: `当前最新版本为：1.0.2。当前版本为${currentVersion}.`,
+    confirmText: '更新',
+    success: function (res) {
+      if (res.confirm) {
+        uni.showLoading({
+          title: '更新中...',
+        });
+        uni.downloadFile({
+          url: 'http://172.18.8.146:10000/file/group1/M00/00/93/rBIIkmYGHziANBD5AsbKCOtNhfg669.apk', //仅为示例，并非真实的资源
+          success: (res) => {
+            uni.hideLoading();
+            if (res.statusCode === 200) {
+              plus.runtime.install(res.tempFilePath, {
+                force: true
+              }, function (e) {
+                console.log(e);
+                // 重启
+                plus.runtime.restart();
+              }, function (e) {
+                console.log('用户取消安装', e);
+              })
+            }
+          }
+        });
+      } else if (res.cancel) {
+        console.log('用户点击取消');
+      }
+    }
+  });
+  //   #endif
+  //   #ifndef APP || APP-PLUS
+  console.error('支持是APP使用')
+  //   #endif
+}
+
 export default {
   setLocalStorage,
   setSessionStorage,
@@ -383,4 +423,5 @@ export default {
   floatCountArr,
   getEvryDay,
   tree2array,
+  checkUpdate,
 };

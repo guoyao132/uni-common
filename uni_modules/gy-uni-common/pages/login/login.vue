@@ -51,7 +51,7 @@
         imgSrc: '',
         randomStr: '',
         username: 'admin',
-        password: 'zhxd@2023',
+        password: 'ABC123456',
         code: '',
 			}
 		},
@@ -112,6 +112,9 @@
 		},
     mounted(){
       this.getCode();
+    },
+    onBackPress(){
+      return true
     },
 	}
 </script>

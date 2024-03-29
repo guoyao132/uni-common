@@ -52,6 +52,7 @@ const {
   floatCountArr,        //多个小数进行计算        params: arr(需要计算的小数数组), type(计算类型 可选floatMul、floatDiv、floatAdd、floatSub 默认 floatAdd)
   getEvryDay,           //获取本月最大天数        params：date
   tree2array,           //将树数据转变为数组       params: tree, child(子节点属性名称)
+  checkUpdate,          //检查APP更新
 } = gyCommon;
 ```
 
