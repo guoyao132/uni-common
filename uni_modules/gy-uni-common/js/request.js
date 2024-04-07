@@ -6,7 +6,6 @@ const timeout = 300000;
 let loadingIndex = 0;
 const showFunLoading = () => {
   loadingIndex++;
-  console.log('showFunLoading', loadingIndex);
   uni.showLoading({
     title: '加载中'
   });
@@ -148,6 +147,5 @@ export const ajaxFile = (option) => {
     opt.filePath = file;
     // #endif
   }
-  console.log(opt);
   return requestFun(opt , 'file')
 }

@@ -62,7 +62,6 @@ export default {
   },
   methods: {
     bindClick(item) {
-      console.log(item);
       if (item.page) {
         uni.navigateTo({
           url: item.page,

@@ -384,17 +384,16 @@ export const checkUpdate = () => {
               plus.runtime.install(res.tempFilePath, {
                 force: true
               }, function (e) {
-                console.log(e);
                 // 重启
                 plus.runtime.restart();
               }, function (e) {
-                console.log('用户取消安装', e);
+                console.info('用户取消安装', e);
               })
             }
           }
         });
       } else if (res.cancel) {
-        console.log('用户点击取消');
+        console.info('用户点击取消');
       }
     }
   });

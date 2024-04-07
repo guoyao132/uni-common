@@ -8,7 +8,7 @@
 <script>
 export default {
   mounted(){
-    console.log(this.$gyCommon);
+    console.info(this.$gyCommon);
   },
 }
 </script>

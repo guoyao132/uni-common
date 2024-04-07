@@ -46,7 +46,6 @@
 		},
 		methods: {
       chooseFileSucc(file){
-        console.log(file);
       },
 		}
 	}

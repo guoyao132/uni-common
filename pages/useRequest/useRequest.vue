@@ -40,7 +40,7 @@ export default {
       get({
         url: baseUrl + "/eledevice/switch/getWiringInfo?stationCode=CSYGKBZ&scheduleNum=undefined&typeCode=1&v=07122989906906496",
       }).then(data => {
-        console.log(data);
+        console.info(data);
       })
     },
     login(){
@@ -60,71 +60,11 @@ export default {
           userId: 'admin'
         }
       }).then(res => {
-        console.log(res);
       })
     },
     chooseFileFun(file) {
       // 处理文件，例如上传
       this.chooseFile = file;
-
-      // console.log(this.chooseFile[0]);
-      // window.aa = this.chooseFile[0]
-
-
-      // #ifdef APP
-      let filePath = this.chooseFile[0];
-      plus.io.resolveLocalFileSystemURL(
-        filePath.path,
-        function (entry) {
-          entry?.file(function (file) {
-            console.log(file);
-            function setFileSm3(file) {
-              return new Promise(resolveFile => {
-                let size = file.size;
-                let offset = 20 || 1024 * 50;
-                let chunks = [file.slice(0, 20)];
-                let cur = offset;
-                let promiseArr = [];
-                while (cur < size) {
-                  let end = cur + offset;
-                  if (end >= size) {
-                    chunks.push(file.slice(cur, end));
-                  } else {
-                    const mid = cur + offset / 2;
-                    chunks.push(file.slice(cur, cur + 2));
-                    chunks.push(file.slice(mid, mid + 2));
-                    chunks.push(file.slice(end - 2, end));
-                  }
-                  cur += offset;
-                }
-                chunks.forEach(b => {
-                  promiseArr.push(new Promise(resolve => {
-                    const fileReader = new plus.io.FileReader()
-                    fileReader.readAsDataURL(b, 'utf-8')
-                    fileReader.onloadend = function (evt) {
-                      const result = {
-                        base64: evt.target.result.split(',')[1],
-                        size: file.size,
-                      }
-                      b.close();
-                      resolve(result.base64)
-                    }
-                  }))
-                })
-                Promise.all(promiseArr).then(result => {
-                  console.log(result);
-                })
-              })
-            }
-
-            setFileSm3(file);
-          })
-        },
-        function (error) {
-          console.log(error)
-        },
-      )
-    //   #endif
     },
     uploadChooseFile(){
       if(this.chooseFile.length !== 0){
@@ -139,7 +79,7 @@ export default {
           url: baseUrl + '/rbac/sys/file/uploadOne',
           file: file,
         }).then(resp => {
-          console.log(resp.result);
+          console.info(resp.result);
         })
       }else{
         uni.showToast({
@@ -155,11 +95,8 @@ export default {
           ajaxFile({
             url: baseUrl + '/rbac/sys/file/uploadOne',
             file: tempFilePaths[0],
-            data: {
-              a: 1,
-            },
           }).then(resp => {
-            console.log(resp.result);
+            console.info(resp.result);
           })
         }
       });
@@ -171,6 +108,6 @@ export default {
 
 <style lang="scss">
 .useRequest{
-  padding: 20px;
+  padding: 20rpx;
 }
 </style>
