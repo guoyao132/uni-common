@@ -4,6 +4,35 @@
 2. 在控制台中进入 [项目]/uni_modeules/gy-uni-common 目录。
 3. 运行npm install
 
+## 页面
+
+### 登录页
+1. 在pages.json中添加配置
+2. 页面路径为 uni_modules/gy-uni-common/pages/login/login
+```
+    {
+        "path" : "uni_modules/gy-uni-common/pages/login/login",
+        "style" :
+        {
+            "navigationStyle": "custom"
+        }
+    }
+```
+
+### 个人中心页
+1. 在pages.json中添加配置
+2. 页面路径为 uni_modules/gy-uni-common/pages/personalCenter/personalCenter
+```
+    {
+        "path" : "uni_modules/gy-uni-common/pages/personalCenter/personalCenter",
+        "style" :
+        {
+            "navigationBarTitleText" : "个人中心",
+            "enablePullDownRefresh" : false
+        }
+    }
+```
+
 ## init
 ```javascript
 import gyUniCommon from "./uni_modules/gy-uni-common/index.js";
