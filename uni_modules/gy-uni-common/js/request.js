@@ -67,9 +67,9 @@ const requestFun = (options, type) => {
       hideFunLoading();
     };
     //给接口加权限信息
-    if (obj.url.indexOf('auth/oauth/token') === -1) {
+    if (obj.url.indexOf('auth/login') === -1) {
       let token = getLocalStorage("zhxd_token", 0);
-      obj.header['Authorization'] = token ? 'bearer' + token : '';
+      obj.header['Authorization'] = token ? 'Bearer ' + token : '';
     }
     showFunLoading();
     encryptRequest(obj, enableAES).then(config => {

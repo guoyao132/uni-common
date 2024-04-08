@@ -44,6 +44,14 @@
 				"navigationBarTitleText" : "个人中心",
 				"enablePullDownRefresh" : false
 			}
+		},
+		{
+		  "path" : "uni_modules/gy-uni-common/pages/personalCenter/personalInfo",
+		  "style" : 
+		  {
+		    "navigationBarTitleText" : "个人信息",
+		    "enablePullDownRefresh" : false
+		  }
 		}
 	],
 	"globalStyle": {
