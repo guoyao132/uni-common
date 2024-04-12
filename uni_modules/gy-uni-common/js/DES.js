@@ -203,17 +203,12 @@ export const encryptRequest = (config, enableAES) => {
         let params = config.params;//大兴post
         let datas = config.data;//可视化post
         let signdata = "";
-        let signdataD = "";
         if (params || urlPObj || datas) {
           params || (params = {});
           datas || (datas = {});
           urlPObj || (urlPObj = {});
-          let newP = {};
-          let newD = {};
-          newP = {...params, ...urlPObj, ...datas};
-
+          let newP = {...params, ...urlPObj, ...datas};
           signdata = JSON.stringify(newP);
-          // let str = encrypt(signdata);
           let str = sm4.encrypt(signdata);//国网加密数据
           str3 = SM3(JSON.parse(JSON.stringify(str)));
           let obj = {
