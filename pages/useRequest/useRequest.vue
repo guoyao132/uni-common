@@ -45,8 +45,19 @@ export default {
     },
     login(){
       postFormdata({
-        url: baseUrl + '/auth/oauth/token?username=admin&password=123456abC&code=1&grant_type=password&scope=server&client_id=cloud&client_secret=cloud&randomStr=1710575816661',
+        url: baseUrl + '/auth/oauth/token',
+        params: {
+          grant_type: 'password',
+          scope: 'server',
+          client_id: 'cloud',
+          client_secret: 'cloud',
+          username: 'admin',
+          password: '123456abC',
+          code: '1',
+          randomStr: '1721810043230'
+        }
       }).then(resp => {
+        console.log(resp);
         this.$gyCommon.setLocalStorage("zhxd_token", resp.access_token, 0);
         this.$gyCommon.setLocalStorage("zhxd_token_linshi", resp.access_token, 0);
         this.$gyCommon.setLocalStorage("userId", resp.userId);

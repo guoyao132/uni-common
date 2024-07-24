@@ -203,23 +203,41 @@ export const encryptRequest = (config, enableAES) => {
         let params = config.params;//大兴post
         let datas = config.data;//可视化post
         let signdata = "";
+        let signdataD = "";
         if (params || urlPObj || datas) {
           params || (params = {});
           datas || (datas = {});
           urlPObj || (urlPObj = {});
-          let newP = {...params, ...urlPObj, ...datas};
+          let newP = {};
+          let newD = {};
+          newP = { ...params, ...urlPObj };
+          newD = datas;
+
           signdata = JSON.stringify(newP);
+          signdataD = JSON.stringify(newD);
+
           let str = sm4.encrypt(signdata);//国网加密数据
+          let strD = sm4.encrypt(signdataD);//国网加密数据
+
           str3 = SM3(JSON.parse(JSON.stringify(str)));
-          let obj = {
-            "zhxd-data": str
+          strD3 = SM3(JSON.parse(JSON.stringify(strD)));
+          let objD = {
+            "zhxd-data": strD
           };
-          config.data = JSON.stringify(newP) == '{}' ? {} : obj;
+          config.data = JSON.stringify(newD) === '{}' ? null : objD;
+          if(JSON.stringify(newP) !== '{}'){
+            config.url = `${config.url}?zhxd-data=${ encodeURIComponent(str)}`
+          }
         }
         let headers = config.header;
         headers["sm4-key"] = enKey;//国网加密设置 header 头；
         headers["sm4-key-i"] = enKeyi;//国网加密设置 header 头；
-        headers["sm3-key"] = str3
+        if (JSON.stringify(datas) !== '{}') {
+          headers["sm3-key"] = strD3
+        } else {
+          headers["sm3-key"] = str3
+        }
+        // headers["sm3-key"] = str3
         resolve(config)
       }
     } else {

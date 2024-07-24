@@ -43,22 +43,30 @@ const requestFun = (options, type) => {
     let obj = formatOptions(options, type);
     obj.success = (res) => {
       {
+        console.log(res);
         let data = decryptRequest(res, enableAES);
-        if(typeof data === 'string'){
-          data = JSON.parse(data);
-        }
-        let status = data.status;
-        if (data.code || data.code === 0) {
-          status = data.code + '';
-        }
-        if (typeof status === 'string') {
-          status = status.toUpperCase();
-        }
-        if (status === 'SUCCEED' || status === "WARRING" || status == undefined || data.success) {
-          resolve(data);
-        } else {
-          fail(data);
-          reject(data);
+        if(data){
+          if(typeof data === 'string'){
+            data = JSON.parse(data);
+          }
+          let status = data.status;
+          if (data.code || data.code === 0) {
+            status = data.code + '';
+          }
+          if (typeof status === 'string') {
+            status = status.toUpperCase();
+          }
+          if (status === 'SUCCEED' || status === "WARRING" || status == undefined || data.success) {
+            resolve(data);
+          } else {
+            fail(data);
+            reject(data);
+          }
+        }else{
+          fail({
+            status: res.statusCode,
+            msg: '请求失败'
+          });
         }
       }
     }
